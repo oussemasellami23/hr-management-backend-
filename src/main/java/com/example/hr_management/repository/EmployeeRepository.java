@@ -43,4 +43,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     
     // Trouver par prénom ET nom
     Optional<Employee> findByFirstNameAndLastName(String firstName, String lastName);
+    List<Employee> findByDepartmentId(Long departmentId);
 }

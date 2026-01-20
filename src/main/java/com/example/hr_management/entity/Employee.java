@@ -5,9 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +53,12 @@ public class Employee {
     @Enumerated(EnumType.STRING)                     // Stocke le texte (pas le numéro)
     @Column(length = 20)
     private EmployeeStatus status;                   // Statut (ACTIF, INACTIF, etc.)
+    // ═══════════════════════════════════════════════════════════
+    // RELATION: Un employé appartient à UN département
+    // ═══════════════════════════════════════════════════════════
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")     // Nom de la colonne FK
+    private Department department;
 
     // Enum pour le statut de l'employé
     public enum EmployeeStatus {
