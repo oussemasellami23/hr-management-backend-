@@ -94,6 +94,26 @@ public class EmployeeController {
         Employee saved = employeeService.creerEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeMapper.toResponseDTO(saved));
     }
+        // ═══════════════════════════════════════════════════════════
+    // PUT /api/employees/{id} - Modifier un employé (avec validation)
+    // ═══════════════════════════════════════════════════════════
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeResponseDTO> modifierEmployee(
+            @PathVariable Long id,
+            @Valid @RequestBody EmployeeCreateDTO dto) {
+        Employee employee = employeeMapper.toEntity(dto);
+        Employee updated = employeeService.modifierEmployee(id, employee);
+        return ResponseEntity.ok(employeeMapper.toResponseDTO(updated));
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // DELETE /api/employees/{id} - Supprimer un employé
+    // ═══════════════════════════════════════════════════════════
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> supprimerEmployee(@PathVariable Long id) {
+        employeeService.supprimerEmployee(id);
+        return ResponseEntity.ok("Employé supprimé avec succès! ID: " + id);
+    }
 
         // ═══════════════════════════════════════════════════════════
     // PUT /api/employees/{id}/department/{departmentId} - Affecter département
